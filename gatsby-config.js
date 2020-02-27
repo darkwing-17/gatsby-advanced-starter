@@ -1,4 +1,5 @@
 const urljoin = require("url-join");
+const path = require("path");
 const config = require("./data/SiteConfig");
 
 module.exports = {
@@ -39,6 +40,9 @@ module.exports = {
       options: {
         plugins: [
           {
+            resolve: `gatsby-remark-relative-images`
+          },
+          {
             resolve: "gatsby-remark-images",
             options: {
               maxWidth: 690
@@ -47,9 +51,9 @@ module.exports = {
           {
             resolve: "gatsby-remark-responsive-iframe"
           },
-          "gatsby-remark-prismjs",
           "gatsby-remark-copy-linked-files",
-          "gatsby-remark-autolink-headers"
+          "gatsby-remark-autolink-headers",
+          "gatsby-remark-prismjs"
         ]
       }
     },
@@ -82,12 +86,12 @@ module.exports = {
         display: "minimal-ui",
         icons: [
           {
-            src: "/logos/logo-192x192.png",
+            src: "/logos/logo-192.png",
             sizes: "192x192",
             type: "image/png"
           },
           {
-            src: "/logos/logo-512x512.png",
+            src: "/logos/logo-512.png",
             sizes: "512x512",
             type: "image/png"
           }
@@ -95,6 +99,16 @@ module.exports = {
       }
     },
     "gatsby-plugin-offline",
+    {
+      resolve: "gatsby-plugin-netlify-cms",
+      options: {
+        modulePath: path.resolve("src/netlifycms/index.js"), // default: undefined
+        enableIdentityWidget: true,
+        publicPath: "admin",
+        htmlTitle: "Content Manager",
+        includeRobots: false
+      }
+    },
     {
       resolve: "gatsby-plugin-feed",
       options: {
@@ -164,7 +178,8 @@ module.exports = {
               }
             }
           `,
-            output: config.siteRss
+            output: config.siteRss,
+            title: config.siteRssTitle
           }
         ]
       }

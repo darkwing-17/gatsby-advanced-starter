@@ -17,11 +17,13 @@ class Disqus extends Component {
     const [, ...toasts] = this.state.toasts;
     this.setState({ toasts });
   }
+
   notifyAboutComment() {
     const toasts = this.state.toasts.slice();
     toasts.push({ text: "New comment available!" });
     this.setState({ toasts });
   }
+
   render() {
     const { postNode } = this.props;
     if (!config.disqusShortname) {
@@ -39,7 +41,7 @@ class Disqus extends Component {
         identifier={post.title}
         title={post.title}
         url={url}
-        category_id={post.category_id}
+        category_id={post.category_id || null}
         onNewComment={this.notifyAboutComment}
       />
     );
